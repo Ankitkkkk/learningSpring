@@ -1,6 +1,8 @@
 package com.testapi.service;
 
 import com.testapi.data.User;
+import com.testapi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,46 +12,16 @@ import java.util.List;
 @Service
 public class UserService {
 
-    List<User> inMemData = new ArrayList<>();
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<User> addUser(User user){
+        System.out.println(userRepository.save(user));
+        return userRepository.findByName(user.getName());
+    }
 
     public List<User> getAllUser(){
-        return this.inMemData;
+        return userRepository.findAll();
     }
 
-    public User addUser(User user){
-        this.inMemData.add(user);
-        return user;
-    }
-
-    public User getUserById(Integer id){
-        for(User user : this.inMemData){
-            if(user.getId().equals(id)){
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public User updateById(User user){
-        for(User user2 : this.inMemData){
-            if(user2.getId().equals(user.getId())){
-                user2.setName(user.getName());
-                user2.setAge(user.getAge());
-                return user2;
-            }
-        }
-        return null;
-    }
-
-    public Boolean deleteById(Integer id){
-        Iterator it = this.inMemData.iterator();
-        while (it.hasNext()){
-            User user = (User)it.next();
-            if(user.getId().equals(id)){
-                it.remove();
-                return true;
-            }
-        }
-        return false;
-    }
 }

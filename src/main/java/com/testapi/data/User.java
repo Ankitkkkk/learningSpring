@@ -1,16 +1,35 @@
 package com.testapi.data;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "name")
     private String name;
+    @Column(name = "age")
     private Integer age;
-    private Integer id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public User() {
     }
 
-    public User(String name, Integer age, Integer id) {
+    public User(String name, Integer age) {
         this.name = name;
         this.age = age;
-        this.id = id;
     }
 
     public String getName() {
@@ -27,13 +46,5 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }
